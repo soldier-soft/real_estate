@@ -1,0 +1,86 @@
+{
+  "info": {
+    "name": "Sri Chakra Real Estate API",
+    "_postman_id": "12345678-1234-5678-1234-567812345678",
+    "description": "Postman collection for testing PHP backend API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Quick Enquiry",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"9876543210\",\n  \"email\": \"john@example.com\",\n  \"interest\": \"residential\",\n  \"budget\": \"10-20\",\n  \"location\": \"Chennai\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/project/backend/index.php/api/quick-enquiry",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["project", "backend", "index.php", "api", "quick-enquiry"]
+        }
+      }
+    },
+    {
+      "name": "Enquiry",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane@example.com\",\n  \"message\": \"I am interested in your properties.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/project/backend/index.php/api/enquiry",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["project", "backend", "index.php", "api", "enquiry"]
+        }
+      }
+    },
+    {
+      "name": "Schedule Visit",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Ravi Kumar\",\n  \"date\": \"2025-09-10\",\n  \"property\": \"DTCP Approved Plot\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/project/backend/index.php/api/schedule",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["project", "backend", "index.php", "api", "schedule"]
+        }
+      }
+    },
+    {
+      "name": "Contact",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Arun Prakash\",\n  \"email\": \"arun@example.com\",\n  \"message\": \"Need more details about DTCP plots.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/project/backend/index.php/api/contact",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["project", "backend", "index.php", "api", "contact"]
+        }
+      }
+    }
+  ]
+}

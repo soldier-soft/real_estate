@@ -1,0 +1,14 @@
+{
+  "name": "srichakra/real-estate-backend",
+  "description": "PHP backend for Sri Chakra Real Estate (enquiry, contact, visit, quick enquiry APIs)",
+  "type": "project",
+  "require": {
+    "php": ">=7.4",
+    "phpmailer/phpmailer": "^6.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

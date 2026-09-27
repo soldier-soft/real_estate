@@ -1,0 +1,49 @@
+# ----------------- Force HTTPS (Production Only) -----------------
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# ----------------- MIME Types for JS/CSS/JSON/WASM -----------------
+<IfModule mod_mime.c>
+  AddType application/javascript .js
+  AddType application/javascript .mjs
+  AddType text/css .css
+  AddType application/json .json
+  AddType application/wasm .wasm
+  AddType image/svg+xml .svg
+</IfModule>
+
+# ----------------- Enable Compression -----------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/wasm
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE text/html
+</IfModule>
+
+# ----------------- API Rewrite -----------------
+# Let existing files/folders through
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route sitemap.xml to sitemap.php
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Route API requests to index.php in the current directory
+RewriteRule ^api(/.*)?$ index.php [QSA,NC,L]
+
+# ----------------- CORS for React Frontend -----------------
+# (Handled dynamically by PHP index.php)
+
+# ----------------- React Frontend Support -----------------
+# Send everything except /backend/api to React's index.html
+RewriteCond %{REQUEST_URI} !^/backend/api/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /index.html [L]
