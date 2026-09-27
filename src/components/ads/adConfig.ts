@@ -4,7 +4,7 @@
  * Environment & Policy Controls:
  * - VITE_ADS_ENABLED: Global toggle to enable/disable ads across the entire site.
  * - VITE_AD_MODE: "development" (renders clearly labeled placeholders) or "production" (renders Google AdSense units).
- * - VITE_ADSENSE_CLIENT_ID: Publisher ID (e.g., ca-pub-2295715889057150).
+ * - VITE_ADSENSE_CLIENT_ID: Publisher ID (e.g., ca-pub-4922514692218549).
  */
 
 export interface AdConfig {
@@ -23,7 +23,7 @@ export const adConfig: AdConfig = {
   adMode: (import.meta.env.VITE_AD_MODE as "development" | "production") || "development",
 
   // Production Publisher Client ID
-  clientId: import.meta.env.VITE_ADSENSE_CLIENT_ID || "ca-pub-2295715889057150",
+  clientId: import.meta.env.VITE_ADSENSE_CLIENT_ID || "ca-pub-4922514692218549",
 
   // Page-specific AdSense policy guidelines (ads disabled on legal, contact, and error pages)
   pageSettings: {

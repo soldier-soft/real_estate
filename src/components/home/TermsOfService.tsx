@@ -10,7 +10,7 @@ const TermsOfService: React.FC = () => {
           name="description"
           content="Review the Terms of Service for using Sri Chakra Real Estate's website, including rules on usage, liability, and updates."
         />
-        <meta name="google-adsense-account" content="ca-pub-2295715889057150" />
+        <meta name="google-adsense-account" content="ca-pub-4922514692218549" />
       </Helmet>
 
       <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>

@@ -10,7 +10,7 @@ const PrivacyPolicy: React.FC = () => {
           name="description"
           content="Read Sri Chakra Real Estate's Privacy Policy to understand how we collect, use, and safeguard your personal information."
         />
-        <meta name="google-adsense-account" content="ca-pub-2295715889057150" />
+        <meta name="google-adsense-account" content="ca-pub-4922514692218549" />
       </Helmet>
 
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>

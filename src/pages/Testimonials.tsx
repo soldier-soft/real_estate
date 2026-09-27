@@ -126,7 +126,7 @@ const Testimonials: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <meta name="google-adsense-account" content="ca-pub-2295715889057150"></meta>
+        <meta name="google-adsense-account" content="ca-pub-4922514692218549"></meta>
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">

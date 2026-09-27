@@ -4,7 +4,7 @@ const Disclaimer: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 text-gray-800">
       <h1 className="text-3xl font-bold mb-6">Disclaimer</h1>
-      <meta name="google-adsense-account" content="ca-pub-2295715889057150"></meta>
+      <meta name="google-adsense-account" content="ca-pub-4922514692218549"></meta>
       <p className="mb-4">
         The information provided on the Sri Chakra Real Estate website is for general
         informational purposes only.

@@ -39,7 +39,7 @@ const About: React.FC = () => {
           name="description"
           content="Learn about Sri Chakra Real Estate – Tamil Nadu's trusted partner in DTCP approved properties. Transparency, legal compliance, and client satisfaction since 2019."
         />
-        <meta name="google-adsense-account" content="ca-pub-2295715889057150" />
+        <meta name="google-adsense-account" content="ca-pub-4922514692218549" />
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

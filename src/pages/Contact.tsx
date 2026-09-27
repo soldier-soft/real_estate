@@ -28,7 +28,7 @@ const SeoHead: React.FC = () => {
         name="keywords"
         content="Sri Chakra Real Estate Contact, DTCP approved plots Tamil Nadu, real estate Vellore contact, buy land Ranipet, Tiruvannamalai property contact, site visit booking, real estate investment Tamil Nadu"
       />
-      <meta name="google-adsense-account" content="ca-pub-2295715889057150" />
+      <meta name="google-adsense-account" content="ca-pub-4922514692218549" />
     </>
   );
 };
