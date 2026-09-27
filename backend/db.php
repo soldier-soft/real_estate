@@ -14,7 +14,7 @@ if ($isLocal) {
     // Local XAMPP MySQL setup
     $localHost = getenv('DB_HOST_LOCAL') ?: "localhost";
     $localUser = getenv('DB_USER_LOCAL') ?: "root";
-    $localPass = getenv('DB_PASS_LOCAL') !== false ? getenv('DB_PASS_LOCAL') : "";
+    $localPass = getenv('DB_PASS_LOCAL') !== false ? getenv('DB_PASS_LOCAL') : "Samprithi004@";
     $localDb   = getenv('DB_NAME_LOCAL') ?: "real_estate";
 
     mysqli_report(MYSQLI_REPORT_OFF);
@@ -35,65 +35,12 @@ if ($isLocal) {
     $conn->query("CREATE DATABASE IF NOT EXISTS `$localDb` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
     $conn->select_db($localDb);
 
-    // 3. Auto-provision tables if missing
-    $conn->query("
-        CREATE TABLE IF NOT EXISTS `quick_enquiries` (
-            `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `name` VARCHAR(100) NOT NULL,
-            `phone` VARCHAR(20) NOT NULL,
-            `email` VARCHAR(150) DEFAULT NULL,
-            `interest` VARCHAR(255) DEFAULT NULL,
-            `budget` VARCHAR(100) DEFAULT NULL,
-            `location` VARCHAR(255) DEFAULT NULL,
-            `message` TEXT DEFAULT NULL,
-            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    ");
-
-    $conn->query("
-        CREATE TABLE IF NOT EXISTS `contacts` (
-            `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `name` VARCHAR(100) NOT NULL,
-            `phone` VARCHAR(20) NOT NULL,
-            `email` VARCHAR(150) NOT NULL,
-            `subject` VARCHAR(255) DEFAULT NULL,
-            `message` TEXT NOT NULL,
-            `reason` VARCHAR(255) DEFAULT NULL,
-            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    ");
-
-    $conn->query("
-        CREATE TABLE IF NOT EXISTS `enquiries` (
-            `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `name` VARCHAR(100) NOT NULL,
-            `phone` VARCHAR(20) NOT NULL,
-            `email` VARCHAR(150) DEFAULT NULL,
-            `message` TEXT DEFAULT NULL,
-            `property_id` INT UNSIGNED DEFAULT NULL,
-            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    ");
-
-    $conn->query("
-        CREATE TABLE IF NOT EXISTS `schedule` (
-            `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `name` VARCHAR(100) NOT NULL,
-            `phone` VARCHAR(20) NOT NULL,
-            `email` VARCHAR(150) DEFAULT NULL,
-            `date` DATE NOT NULL,
-            `time` TIME NOT NULL,
-            `property_id` INT UNSIGNED NOT NULL,
-            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    ");
-
 } else {
     // Production Hostinger DB connection
     $prodHost = getenv('DB_HOST') ?: "mysql.hostinger.com";
-    $prodUser = getenv('DB_USER') ?: "u351480125_srichakra";
+    $prodUser = getenv('DB_USER') ?: "u103875823_srichakra";
     $prodPass = getenv('DB_PASS') ?: "Samprithi004@";
-    $prodDb   = getenv('DB_NAME') ?: "u351480125_srichakra";
+    $prodDb   = getenv('DB_NAME') ?: "u103875823_srichakra";
 
     mysqli_report(MYSQLI_REPORT_OFF);
     $conn = @new mysqli($prodHost, $prodUser, $prodPass, $prodDb);
@@ -111,16 +58,72 @@ if ($isLocal) {
 // Set charset
 $conn->set_charset("utf8mb4");
 
-// ------------------- Auto-provision New Tables -------------------
+// ------------------- Universal Auto-provision Tables -------------------
+$conn->query("
+    CREATE TABLE IF NOT EXISTS `quick_enquiries` (
+        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(100) NOT NULL,
+        `phone` VARCHAR(20) NOT NULL,
+        `email` VARCHAR(150) DEFAULT NULL,
+        `interest` VARCHAR(255) DEFAULT NULL,
+        `budget` VARCHAR(100) DEFAULT NULL,
+        `location` VARCHAR(255) DEFAULT NULL,
+        `message` TEXT DEFAULT NULL,
+        `property_id` INT UNSIGNED DEFAULT NULL,
+        `property_title` VARCHAR(255) DEFAULT NULL,
+        `status` VARCHAR(50) DEFAULT 'New',
+        `admin_notes` TEXT DEFAULT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+");
+
+$conn->query("
+    CREATE TABLE IF NOT EXISTS `contacts` (
+        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(100) NOT NULL,
+        `phone` VARCHAR(20) NOT NULL,
+        `email` VARCHAR(150) NOT NULL,
+        `subject` VARCHAR(255) DEFAULT NULL,
+        `message` TEXT NOT NULL,
+        `reason` VARCHAR(255) DEFAULT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+");
+
+$conn->query("
+    CREATE TABLE IF NOT EXISTS `enquiries` (
+        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(100) NOT NULL,
+        `phone` VARCHAR(20) NOT NULL,
+        `email` VARCHAR(150) DEFAULT NULL,
+        `message` TEXT DEFAULT NULL,
+        `property_id` INT UNSIGNED DEFAULT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+");
+
+$conn->query("
+    CREATE TABLE IF NOT EXISTS `schedule` (
+        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(100) NOT NULL,
+        `phone` VARCHAR(20) NOT NULL,
+        `email` VARCHAR(150) DEFAULT NULL,
+        `date` DATE NOT NULL,
+        `time` TIME NOT NULL,
+        `property_id` INT UNSIGNED NOT NULL,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+");
+
 $conn->query("
     CREATE TABLE IF NOT EXISTS `properties` (
         `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         `title` VARCHAR(255) NOT NULL,
         `location` VARCHAR(255) NOT NULL,
         `type` VARCHAR(50) NOT NULL DEFAULT 'Residential',
-        `price` BIGINT NOT NULL,
-        `price_per_sqft` INT NOT NULL,
-        `size` INT NOT NULL,
+        `price` BIGINT NOT NULL DEFAULT 0,
+        `price_per_sqft` INT NOT NULL DEFAULT 0,
+        `size` INT NOT NULL DEFAULT 0,
         `image` VARCHAR(500) DEFAULT NULL,
         `video` VARCHAR(500) DEFAULT NULL,
         `images` LONGTEXT DEFAULT NULL,
@@ -130,6 +133,19 @@ $conn->query("
         `dtcp_number` VARCHAR(100) DEFAULT NULL,
         `is_featured` TINYINT(1) NOT NULL DEFAULT 0,
         `is_published` TINYINT(1) NOT NULL DEFAULT 1,
+        `slug` VARCHAR(255) DEFAULT NULL,
+        `seo_title` VARCHAR(255) DEFAULT NULL,
+        `seo_description` TEXT DEFAULT NULL,
+        `focus_keyword` VARCHAR(255) DEFAULT NULL,
+        `secondary_keywords` VARCHAR(500) DEFAULT NULL,
+        `seo_content` LONGTEXT DEFAULT NULL,
+        `image_alt` VARCHAR(255) DEFAULT NULL,
+        `og_title` VARCHAR(255) DEFAULT NULL,
+        `og_description` TEXT DEFAULT NULL,
+        `og_image` VARCHAR(500) DEFAULT NULL,
+        `canonical_url` VARCHAR(500) DEFAULT NULL,
+        `is_indexed` TINYINT(1) DEFAULT 1,
+        `seo_status` VARCHAR(50) DEFAULT 'Optimized',
         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -162,8 +178,19 @@ $conn->query("
         `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ");
-// ------------------- Auto-provision New Columns & Tables for SEO -------------------
-$propCols = [
+
+// Dynamic Column Migration for properties (backward compatibility with older DB versions)
+$allPropCols = [
+    'price_per_sqft' => "INT NOT NULL DEFAULT 0",
+    'size' => "INT NOT NULL DEFAULT 0",
+    'image' => "VARCHAR(500) DEFAULT NULL",
+    'video' => "VARCHAR(500) DEFAULT NULL",
+    'images' => "LONGTEXT DEFAULT NULL",
+    'features' => "LONGTEXT DEFAULT NULL",
+    'status' => "VARCHAR(50) NOT NULL DEFAULT 'Available'",
+    'dtcp_number' => "VARCHAR(100) DEFAULT NULL",
+    'is_featured' => "TINYINT(1) NOT NULL DEFAULT 0",
+    'is_published' => "TINYINT(1) NOT NULL DEFAULT 1",
     'slug' => "VARCHAR(255) DEFAULT NULL",
     'seo_title' => "VARCHAR(255) DEFAULT NULL",
     'seo_description' => "TEXT DEFAULT NULL",
@@ -176,15 +203,17 @@ $propCols = [
     'og_image' => "VARCHAR(500) DEFAULT NULL",
     'canonical_url' => "VARCHAR(500) DEFAULT NULL",
     'is_indexed' => "TINYINT(1) DEFAULT 1",
-    'seo_status' => "VARCHAR(50) DEFAULT 'Optimized'"
+    'seo_status' => "VARCHAR(50) DEFAULT 'Optimized'",
+    'updated_at' => "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
 ];
-foreach ($propCols as $col => $def) {
+foreach ($allPropCols as $col => $def) {
     $checkCol = $conn->query("SHOW COLUMNS FROM `properties` LIKE '$col'");
     if ($checkCol && $checkCol->num_rows === 0) {
         $conn->query("ALTER TABLE `properties` ADD COLUMN `$col` $def");
     }
 }
 
+// Dynamic Column Migration for quick_enquiries
 $enqCols = [
     'property_id' => "INT UNSIGNED DEFAULT NULL",
     'property_title' => "VARCHAR(255) DEFAULT NULL",
@@ -440,18 +469,32 @@ foreach ($seedPropertySEO as $pid => $seo) {
     }
 }
 
-// 3. Seed default administrator if empty
-$checkAdmin = $conn->query("SELECT COUNT(*) AS cnt FROM `admins`");
-if ($checkAdmin && ($row = $checkAdmin->fetch_assoc()) && (int)$row['cnt'] === 0) {
-    $defaultUser = getenv('ADMIN_DEFAULT_USER') ?: 'admin';
-    $defaultPass = getenv('ADMIN_DEFAULT_PASSWORD') ?: 'ChangeMe@123';
+// 3. Seed default administrator if empty or unsynced
+$defaultUser = getenv('ADMIN_DEFAULT_USER') ?: 'admin';
+$defaultPass = getenv('ADMIN_DEFAULT_PASSWORD') ?: 'ChangeMe@123';
+$checkAdmin = $conn->query("SELECT `id`, `username`, `password_hash`, `must_change_password` FROM `admins` WHERE LOWER(`username`) = 'admin'");
+
+if (!$checkAdmin || $checkAdmin->num_rows === 0) {
     $hash = password_hash($defaultPass, PASSWORD_BCRYPT);
     $mustChange = 1;
 
     $stmt = $conn->prepare("INSERT INTO `admins` (`username`, `password_hash`, `must_change_password`) VALUES (?, ?, ?)");
-    $stmt->bind_param("ssi", $defaultUser, $hash, $mustChange);
-    $stmt->execute();
-    $stmt->close();
+    if ($stmt) {
+        $stmt->bind_param("ssi", $defaultUser, $hash, $mustChange);
+        $stmt->execute();
+        $stmt->close();
+    }
+} else {
+    $adminRow = $checkAdmin->fetch_assoc();
+    if ((int)$adminRow['must_change_password'] === 1 && !password_verify($defaultPass, $adminRow['password_hash'])) {
+        $hash = password_hash($defaultPass, PASSWORD_BCRYPT);
+        $upd = $conn->prepare("UPDATE `admins` SET `password_hash` = ? WHERE `id` = ?");
+        if ($upd) {
+            $upd->bind_param("si", $hash, $adminRow['id']);
+            $upd->execute();
+            $upd->close();
+        }
+    }
 }
 
 // 4. Seed default website settings if empty

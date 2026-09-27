@@ -8,17 +8,26 @@ import axios from "axios";
 export const getApiBaseUrl = (): string => {
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
+    // 1. Local development
     if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
       return "http://localhost/real_estate/backend";
     }
+
+    // 2. If a custom override is provided in environment variables
+    const envUrl = import.meta.env.VITE_API_BASE_URL;
+    if (envUrl && envUrl.trim() !== "" && !envUrl.includes("yourdomain.com") && !envUrl.includes("example.com")) {
+      // If it's a relative path or matches the current domain, use it
+      if (envUrl.startsWith("/")) {
+        return `${window.location.origin}${envUrl}`;
+      }
+    }
+
+    // 3. In production: dynamically resolve to current origin's /backend
+    // Works reliably on srichakrarealestate.com, srichakrarealestate.in, and Hostinger preview domains
+    return `${window.location.origin}/backend`;
   }
 
-  const envUrl = import.meta.env.VITE_API_BASE_URL;
-  if (envUrl && envUrl.trim() !== "") {
-    return envUrl.replace(/\/+$/, "");
-  }
-
-  return "https://srichakrarealestate.in/backend";
+  return "/backend";
 };
 
 export interface Property {

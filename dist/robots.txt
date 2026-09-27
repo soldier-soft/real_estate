@@ -1,0 +1,17 @@
+# User-agent directives for Sri Chakra Real Estate
+User-agent: *
+Allow: /
+Allow: /img/
+Allow: /uploads/
+Disallow: /backend/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /admin
+
+# Google AdSense Crawler
+User-agent: Mediapartners-Google
+Allow: /
+
+# Sitemap Pointers
+Sitemap: https://srichakrarealestate.in/sitemap.xml
+Sitemap: https://srichakrarealestate.in/api/sitemap.xml

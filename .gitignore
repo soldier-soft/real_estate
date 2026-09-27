@@ -7,8 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
 node_modules
-dist
 dist-ssr
 *.local
 
@@ -23,6 +23,17 @@ dist-ssr
 *.sln
 *.sw?
 CppProperties.json
+.vs/
+
+# Environment files
 .env
 .env*.local
-.vs/
+
+# Whitelist production files required for live deployment
+!.env.production
+!.env.example
+!backend/.env
+!database.sql
+!backend/database.sql
+!dist
+!dist/**
